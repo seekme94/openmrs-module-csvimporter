@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
+	<!-- See http://wiki.openmrs.org/display/docs/Module+liquibase+File for 
+		documentation on this file. See http://www.liquibase.org/manual/home#available_database_refactorings 
+		for a list of supported elements and attributes -->
+
+	<changeSet id="csvimporter-2014-01-20" author="owais.hussain@ihsinformatics.com">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists tableName="csvimporter_metadata" />
+			</not>
+		</preConditions>
+		<comment>
+			Creating the csvimporter_metadata table
+		</comment>
+		<createTable tableName="csvimporter_metadata">
+			<column name="meta_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="meta_name" type="varchar(50)">
+				<constraints unique="true" nullable="false" />
+			</column>
+			<column name="meta_value" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="creator" type="int">
+				<constraints nullable="false" />
+			</column>
+			<column name="date_created" type="datetime">
+				<constraints nullable="false" />
+			</column>
+			<column name="uuid" type="varchar(255)">
+				<constraints unique="true" nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet id="csvimporter-2014-01-21" author="owais.hussain@ihsinformatics.com">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists tableName="csvimporter_saved_config" />
+			</not>
+		</preConditions>
+		<comment>
+			Creating the csvimporter_saved_config table to be used to save CSV import configurations
+		</comment>
+		<createTable tableName="csvimporter_saved_config">
+			<column name="config_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="config_name" type="varchar(50)">
+				<constraints unique="true" nullable="false" />
+			</column>
+			<column name="separator" type="char(1)" />
+			<column name="qualifiers" type="char(1)" />
+			<column name="datetime_format" type="varchar(50)" />
+			<!-- Mapping is JSON: [{"name":"pid","type":"identifier","mapto":"patient_id"},{"name":"fever","type":"concept","mapto":"FEVER"},{...},...] -->
+			<column name="mapping" type="varchar(16384)" />
+			<column name="creator" type="int">
+				<constraints nullable="false" />
+			</column>
+			<column name="date_created" type="datetime">
+				<constraints nullable="false" />
+			</column>
+			<column name="uuid" type="varchar(255)">
+				<constraints unique="true" nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+
+</databaseChangeLog>
