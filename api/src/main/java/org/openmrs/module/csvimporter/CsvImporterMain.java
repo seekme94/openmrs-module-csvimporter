@@ -12,20 +12,12 @@
 package org.openmrs.module.csvimporter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openmrs.api.context.Context;
-import org.openmrs.api.context.ServiceContext;
-import org.openmrs.module.csvimporter.model.MapObject;
-import org.openmrs.module.csvimporter.model.OpenMRSObjectType;
+import org.openmrs.module.csvimporter.model.CsvImporterMapping;
 import org.openmrs.module.csvimporter.util.CsvUtil;
-import org.openmrs.module.csvimporter.util.PropertiesUtil;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * @author owais.hussain@irdresearch.org
@@ -47,17 +39,17 @@ public class CsvImporterMain {
 		CsvUtil csvUtil = new CsvUtil(filePath, separator, true);
 		String[][] readData = csvUtil.readData();
 		String[] header = csvUtil.getHeader();
-		List<MapObject> map = new ArrayList<MapObject>();
+		List<CsvImporterMapping> map = new ArrayList<CsvImporterMapping>();
 		// form_date, time_stamp, district_name, facility_name, screener_id, user_id, nhls_id,
 		// address, phone1, tb_contact, hiv_positive, diabetes, sputum_collection_date, sputum_result_date, sputum_result, 
 		// mdr, treatment_start_date, died,lost_followup,transferred,transfer_to,comments
 
 		// PERSON ATTRIBUTES
-		map.add(new MapObject("first_name", OpenMRSObjectType.PERSON_ATTRIBUTE, "given_name"));
-		map.add(new MapObject("surname", OpenMRSObjectType.PERSON_ATTRIBUTE, "family_name"));
-		map.add(new MapObject("age", OpenMRSObjectType.PERSON_ATTRIBUTE, "age"));
-		map.add(new MapObject("dob", OpenMRSObjectType.PERSON_ATTRIBUTE, "dob"));
-		map.add(new MapObject("gender", OpenMRSObjectType.PERSON_ATTRIBUTE, "gender"));
+//		map.add(new MapObject("first_name", OpenMRSObjectType.PERSON_ATTRIBUTE, "given_name"));
+//		map.add(new MapObject("surname", OpenMRSObjectType.PERSON_ATTRIBUTE, "family_name"));
+//		map.add(new MapObject("age", OpenMRSObjectType.PERSON_ATTRIBUTE, "age"));
+//		map.add(new MapObject("dob", OpenMRSObjectType.PERSON_ATTRIBUTE, "dob"));
+//		map.add(new MapObject("gender", OpenMRSObjectType.PERSON_ATTRIBUTE, "gender"));
 
 
 	}

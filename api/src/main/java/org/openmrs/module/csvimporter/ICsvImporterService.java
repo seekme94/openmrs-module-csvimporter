@@ -11,7 +11,6 @@
  */
 package org.openmrs.module.csvimporter;
 
-import java.io.IOException;
 import java.util.Map;
 
 /**

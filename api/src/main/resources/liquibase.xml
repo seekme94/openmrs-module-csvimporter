@@ -9,48 +9,51 @@
 		documentation on this file. See http://www.liquibase.org/manual/home#available_database_refactorings 
 		for a list of supported elements and attributes -->
 
-	<changeSet id="csvimporter-2014-01-20" author="owais.hussain@ihsinformatics.com">
+	<changeSet id="csvimporter-config-2015-04-17" author="owais.hussain@ihsinformatics.com">
 		<preConditions onFail="MARK_RAN">
 			<not>
-				<tableExists tableName="csvimporter_metadata" />
+				<tableExists tableName="csvimporter_configuration" />
 			</not>
 		</preConditions>
 		<comment>
-			Creating the csvimporter_metadata table
+			Creating the csvimporter_configuration table to store saved configurations
 		</comment>
-		<createTable tableName="csvimporter_metadata">
-			<column name="meta_id" type="int" autoIncrement="true">
+		<createTable tableName="csvimporter_configuration">
+			<column name="config_id" type="int" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
-			<column name="meta_name" type="varchar(50)">
+			<column name="config_name" type="varchar(50)">
 				<constraints unique="true" nullable="false" />
-			</column>
-			<column name="meta_value" type="varchar(255)">
-				<constraints nullable="false" />
 			</column>
 			<column name="creator" type="int">
 				<constraints nullable="false" />
 			</column>
-			<column name="date_created" type="datetime">
-				<constraints nullable="false" />
-			</column>
-			<column name="uuid" type="varchar(255)">
+			<column name="date_created" type="datetime" />
+			<column name="changedBy" type="int" />
+			<column name="date_changed" type="datetime" />
+			<column name="csv_header" type="text" />
+			<column name="field_separator" type="char(1)" />
+			<column name="line_separator" type="char(1)" />
+			<column name="date_format" type="varchar(50)" />
+			<column name="time_format" type="varchar(50)" />
+			
+			<column name="uuid" type="varchar(38)">
 				<constraints unique="true" nullable="false" />
 			</column>
 		</createTable>
 	</changeSet>
 
-	<changeSet id="csvimporter-2014-01-21" author="owais.hussain@ihsinformatics.com">
+	<changeSet id="csvimporter-mapping-2015-04-17" author="owais.hussain@ihsinformatics.com">
 		<preConditions onFail="MARK_RAN">
 			<not>
-				<tableExists tableName="csvimporter_saved_config" />
+				<tableExists tableName="csvimporter_mapping" />
 			</not>
 		</preConditions>
 		<comment>
-			Creating the csvimporter_saved_config table to be used to save CSV import configurations
+			Creating the csvimporter_mapping table to store configuration mappings
 		</comment>
-		<createTable tableName="csvimporter_saved_config">
-			<column name="config_id" type="int" autoIncrement="true">
+		<createTable tableName="csvimporter_mapping">
+			<column name="mapping_id" type="int" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
 			<column name="config_name" type="varchar(50)">
@@ -59,7 +62,7 @@
 			<column name="separator" type="char(1)" />
 			<column name="qualifiers" type="char(1)" />
 			<column name="datetime_format" type="varchar(50)" />
-			<!-- Mapping is JSON: [{"name":"pid","type":"identifier","mapto":"patient_id"},{"name":"fever","type":"concept","mapto":"FEVER"},{...},...] -->
+			<!-- Mapping is JSON: [{"name":"pid","type":"identifier","mapto":"patient_id"},{"name":"fever","type":"obs","mapto":"FEVER"},{...},...] -->
 			<column name="mapping" type="varchar(16384)" />
 			<column name="creator" type="int">
 				<constraints nullable="false" />

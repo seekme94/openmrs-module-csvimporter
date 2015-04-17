@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="org.openmrs">
+ <class batch-size="25"
+  name="org.openmrs.module.csvimporter.model.CsvImporterMapping" table="csvimporter_mapping">
+  <id column="mapping_id" name="mappingId" type="int">
+   <generator class="native">
+    <param name="sequence">csvimporter_mapping_mapping_id_seq</param>
+   </generator>
+  </id>
+  <discriminator column="mapping_id" force="false" insert="false" not-null="true"/>
+  <property column="uuid" generated="never" lazy="false" length="38"
+   name="uuid" type="java.lang.String" unique="true"/>
+  <many-to-one
+   class="org.openmrs.module.csvimporter.model.CsvImporterConfiguration" name="configuration"/>
+  <property column="date_created" generated="never" lazy="false"
+   length="19" name="dateCreated" not-null="true" type="java.util.Date"/>
+  <many-to-one class="User" name="creator" not-null="true"/>
+  <many-to-one class="Concept" column="concept_id" name="concept" not-null="true"/>
+  <property column="date_changed" generated="never" lazy="false"
+   name="dateChanged" type="java.util.Date"/>
+  <many-to-one class="org.openmrs.User" name="changedBy"/>
+  <property column="column_name" name="columnName" type="java.lang.String"/>
+  <property column="object_category" name="objectCategory" type="java.lang.String"/>
+  <property column="object_name" name="objectName" type="java.lang.String"/>
+  <property column="other_args" name="other_args" type="java.lang.String"/>
+ </class>
+</hibernate-mapping>
