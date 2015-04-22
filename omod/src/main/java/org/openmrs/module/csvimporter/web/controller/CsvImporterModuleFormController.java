@@ -15,46 +15,52 @@
 package org.openmrs.module.csvimporter.web.controller;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
+import org.openmrs.messagesource.MessageSourceService;
+import org.openmrs.module.csvimporter.CsvImporterService;
+import org.openmrs.module.csvimporter.model.CsvImporterConfiguration;
+import org.openmrs.web.WebConstants;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.WebRequest;
 
 /**
- * This class configured as controller using annotation and mapped with the URL
- * of 'module/basicmodule/basicmoduleLink.form'.
+ * This class configured as controller using annotation and mapped with the URL of
+ * 'module/basicmodule/basicmoduleLink.form'.
  */
 @Controller
 @RequestMapping(value = "module/basicmodule/basicmoduleLink.form")
-public class CsvImporterModuleFormController
-{
-
+public class CsvImporterModuleFormController {
+	
 	/** Logger for this class and subclasses */
-	protected final Log		log					= LogFactory.getLog (CsvImporterModuleFormController.class);
-
+	protected final Log log = LogFactory.getLog(CsvImporterModuleFormController.class);
+	
 	/** Success form view name */
-	private final String	SUCCESS_FORM_VIEW	= "/module/csvimporter/csvimporterForm";
-
+	private final String SUCCESS_FORM_VIEW = "/module/csvimporter/csvimporterForm";
+	
 	/**
-	 * Initially called after the formBackingObject method to get the landing
-	 * form name
+	 * Initially called after the formBackingObject method to get the landing form name
 	 * 
 	 * @return String form view name
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public String showForm ()
-	{
+	public String showForm() {
 		return SUCCESS_FORM_VIEW;
 	}
-
+	
 	/**
 	 * All the parameters are optional based on the necessity
 	 * 
@@ -64,40 +70,57 @@ public class CsvImporterModuleFormController
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public String onSubmit (HttpSession httpSession, @ModelAttribute("anyRequestObject") Object anyRequestObject, BindingResult errors)
-	{
-		if (errors.hasErrors ())
-		{
+	public String onSubmit(HttpSession httpSession, @ModelAttribute("anyRequestObject") Object anyRequestObject,
+	                       BindingResult errors) {
+		if (errors.hasErrors()) {
 			// return error view
 		}
 		return SUCCESS_FORM_VIEW;
 	}
 	
-	protected void populateModel (HttpServletRequest request, Map<String, Object> model)
-	{
+	protected void populateModel(HttpServletRequest request, Map<String, Object> model) {
 		// TODO: My code here
 	}
-
+	
 	/**
-	 * This class returns the form backing object. This can be a string, a
-	 * boolean, or a normal java pojo. The bean name defined in the
-	 * ModelAttribute annotation and the type can be just defined by the return
-	 * type of this method
+	 * This class returns the form backing object. This can be a string, a boolean, or a normal java
+	 * pojo. The bean name defined in the ModelAttribute annotation and the type can be just defined
+	 * by the return type of this method
 	 */
-	@ModelAttribute("thePatientList")
-	protected Collection<Patient> formBackingObject (HttpServletRequest request) throws Exception
-	{
-		// get all patients that have an identifier "101" (from the demo sample
-		// data)
-		// see
-		// http://resources.openmrs.org/doc/index.html?org/openmrs/api/PatientService.html
-		// for
-		// a list of all PatientService methods
-		Collection<Patient> patients = Context.getPatientService ().findPatients ("101", false);
+	@ModelAttribute("configList")
+	protected Collection<CsvImporterConfiguration> formBackingObject(HttpServletRequest request) throws Exception {
+		// This is the object returned and used in the jsp as ${levelFormBackingObject} because it is defined as such in the /metadata/moduleApplicationContext
+		List<CsvImporterConfiguration> configurations = Context.getService(CsvImporterService.class).getAllConfigurations();
+		return configurations;
+	}
+	
+	@RequestMapping(value = "/module/csvimporter/csvimporterForm.form", method = RequestMethod.POST)
+	public String submitCsvImporterConfiguration(WebRequest request, HttpSession httpSession, ModelMap model,
+	                                             @RequestParam(required = false, value = "action") String action,
+	                                             @ModelAttribute("department") CsvImporterConfiguration configuration,
+	                                             BindingResult errors) {
+		
+		MessageSourceService mss = Context.getMessageSourceService();
+		CsvImporterService csvImporterService = Context.getService(CsvImporterService.class);
 
-		// this object will be made available to the jsp page under the variable
-		// name
-		// that is defined in the @ModuleAttribute tag
-		return patients;
+		if (!Context.isAuthenticated()) {
+			errors.reject("csvimporter.auth.failed");
+		}
+		else if (mss.getMessage("save.configuration").equals(action)) {
+			csvImporterService.saveConfiguration(configuration);
+			try {
+	            httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "csvimporter.config.save.success");
+	            return "redirect:csvimporterList.list";
+            }
+            catch (Exception e) {
+	            httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "csvimporter.config.save.fail");
+	            log.error(e);
+				return "redirect:departmentForm.form?configId=" + request.getParameter("configId");
+            }
+		}
+		
+		else if (mss.getMessage("delete.configuration").equals(action)) {
+		}
+		return "redirect:csvimporterList";
 	}
 }

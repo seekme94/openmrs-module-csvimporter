@@ -28,8 +28,8 @@ public class CsvImporterModuleActivatorTest extends BaseModuleContextSensitiveTe
 	 */
 	@Test
 	public void shouldGetModuleObjectWithNullParameter() throws Exception {
-		ICsvImporterService service = Context.getService(ICsvImporterService.class);
-		ICsvImporterService obj = service.getMyModuleByName(null);
+		CsvImporterService service = Context.getService(CsvImporterService.class);
+		CsvImporterService obj = service.getMyModuleByName(null);
 		Assert.assertNull("Everything is awesome... Everything is cool...", obj);
 	}
 }

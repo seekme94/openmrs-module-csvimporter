@@ -31,12 +31,12 @@
 			<column name="date_created" type="datetime" />
 			<column name="changedBy" type="int" />
 			<column name="date_changed" type="datetime" />
+			<!-- Header might be in JSON: [{"name":"pid","type":"identifier","mapto":"patient_id"},{"name":"fever","type":"obs","mapto":"FEVER"},{...},...] -->
 			<column name="csv_header" type="text" />
 			<column name="field_separator" type="char(1)" />
 			<column name="line_separator" type="char(1)" />
 			<column name="date_format" type="varchar(50)" />
 			<column name="time_format" type="varchar(50)" />
-			
 			<column name="uuid" type="varchar(38)">
 				<constraints unique="true" nullable="false" />
 			</column>
@@ -56,21 +56,20 @@
 			<column name="mapping_id" type="int" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
-			<column name="config_name" type="varchar(50)">
-				<constraints unique="true" nullable="false" />
+			<column name="config_id" type="int">
+				<constraints nullable="false" />
 			</column>
-			<column name="separator" type="char(1)" />
-			<column name="qualifiers" type="char(1)" />
-			<column name="datetime_format" type="varchar(50)" />
-			<!-- Mapping is JSON: [{"name":"pid","type":"identifier","mapto":"patient_id"},{"name":"fever","type":"obs","mapto":"FEVER"},{...},...] -->
-			<column name="mapping" type="varchar(16384)" />
 			<column name="creator" type="int">
 				<constraints nullable="false" />
 			</column>
-			<column name="date_created" type="datetime">
-				<constraints nullable="false" />
-			</column>
-			<column name="uuid" type="varchar(255)">
+			<column name="date_created" type="datetime" />
+			<column name="changedBy" type="int" />
+			<column name="date_changed" type="datetime" />
+			<column name="column_name" type="varchar(20)" />
+			<column name="object_category" type="varchar(20)" />
+			<column name="object_name" type="varchar(20)" />
+			<column name="other_args" type="varchar(255)" />
+			<column name="uuid" type="varchar(38)">
 				<constraints unique="true" nullable="false" />
 			</column>
 		</createTable>

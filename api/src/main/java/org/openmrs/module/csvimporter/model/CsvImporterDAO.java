@@ -35,8 +35,6 @@ public interface CsvImporterDAO {
 	public List<CsvImporterConfiguration> getAllConfigurations() throws DAOException;
 
 	public CsvImporterMapping createMapping(CsvImporterMapping mapping) throws DAOException;
-
-	public List<CsvImporterMapping> createMappings(List<CsvImporterMapping> mapping) throws DAOException;
 	
 	public CsvImporterMapping updateMapping(CsvImporterMapping mapping) throws DAOException;
 

@@ -96,18 +96,6 @@ public class CsvImporterDAOImpl implements CsvImporterDAO {
 	}
 	
 	/**
-	 * Bulk create mapping objects for configuration
-	 * 
-	 * @see org.openmrs.module.csvimporter.model.CsvImporterDAO#createMappings(java.util.List)
-	 */
-	public List<CsvImporterMapping> createMappings(List<CsvImporterMapping> mapping) throws DAOException {
-		for (CsvImporterMapping m : mapping) {
-			createMapping(m);
-		}
-		return mapping;
-	}
-	
-	/**
 	 * @see org.openmrs.module.csvimporter.model.CsvImporterDAO#updateMapping(org.openmrs.module.csvimporter.model.CsvImporterMapping)
 	 */
 	public CsvImporterMapping updateMapping(CsvImporterMapping mapping) throws DAOException {
