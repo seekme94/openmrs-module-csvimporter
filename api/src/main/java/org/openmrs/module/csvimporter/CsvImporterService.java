@@ -99,4 +99,40 @@ public interface CsvImporterService extends OpenmrsService {
 	 * @throws DAOException
 	 */
 	public void deleteMapping(CsvImporterMapping mapping) throws DAOException;
+	
+	/**
+	 * Get mapping by Id
+	 * 
+	 * @param id
+	 * @return
+	 * @throws DAOException
+	 */
+	public CsvImporterMapping getCsvImporterMappingById(Integer id) throws DAOException;
+	
+	/**
+	 * Get mapping by column name
+	 * 
+	 * @param name
+	 * @return
+	 * @throws DAOException
+	 */
+	public CsvImporterMapping getCsvImporterMappingByColumnName(String name) throws DAOException;
+	
+	/**
+	 * Get mappings by object category
+	 * 
+	 * @param objectCategory
+	 * @return
+	 * @throws DAOException
+	 */
+	public List<CsvImporterMapping> getCsvImporterMappingByObjectCategory(String objectCategory) throws DAOException;
+	
+	/**
+	 * Get mappings by object name
+	 * 
+	 * @param objectName
+	 * @return
+	 * @throws DAOException
+	 */
+	public List<CsvImporterMapping> getCsvImporterMappingByObjectName(String objectName) throws DAOException;
 }

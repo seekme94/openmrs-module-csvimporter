@@ -9,27 +9,32 @@
  * Interactive Health Solutions, hereby disclaims all copyright interest in this program written by the contributors.
  * Contributors: Owais
  */
-package org.openmrs.module.csvimporter;
-
-import org.junit.Assert;
-import org.junit.Test;
-import org.openmrs.api.context.Context;
-import org.openmrs.test.BaseModuleContextSensitiveTest;
+package org.openmrs.module.csvimporter.model;
 
 /**
  * @author owais.hussain@irdresearch.org
  */
-public class CsvImporterModuleActivatorTest extends BaseModuleContextSensitiveTest {
+public class OpenMrsObjectCategory {
 	
-	/**
-	 * Make sure that MyService runs fine with a null parameter to getMyModuleObject
-	 *
-	 * @throws Exception
-	 */
-	@Test
-	public void shouldGetModuleObjectWithNullParameter() throws Exception {
-		CsvImporterService service = Context.getService(CsvImporterService.class);
-		CsvImporterService obj = service.getMyModuleByName(null);
-		//Assert.assertNull("Everything is awesome... Everything is cool...", obj);
-	}
+	public static final String CONCEPT = "concept";
+	
+	public static final String ENCOUNTER = "encounter";
+	
+	public static final String LOCATION = "location";
+	
+	public static final String LOCATION_ATTRIBUTE = "location_attribute";
+	
+	public static final String OBS = "obs";
+	
+	public static final String PERSON = "person";
+
+	public static final String PERSON_ADDRESS= "person_address";
+
+	public static final String PERSON_ATTRIBUTE = "person_attribute";
+	
+	public static final String PERSON_NAME = "person_name";
+	
+	public static final String PATIENT = "patient_attribute";
+	
+	public static final String VISIT = "visit";
 }

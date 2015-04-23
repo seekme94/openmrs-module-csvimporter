@@ -17,6 +17,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.openmrs.api.db.DAOException;
 
 /**
@@ -31,9 +32,8 @@ public class CsvImporterDAOImpl implements CsvImporterDAO {
 	 */
 	private SessionFactory sessionFactory;
 	
-	/**
-	 * Create new configuration object
-	 * 
+	/*
+	 * (non-Javadoc)
 	 * @see org.openmrs.module.csvimporter.model.CsvImporterDAO#createConfiguration(org.openmrs.module.csvimporter.model.CsvImporterConfiguration)
 	 */
 	public CsvImporterConfiguration createConfiguration(CsvImporterConfiguration configuration) throws DAOException {
@@ -41,7 +41,8 @@ public class CsvImporterDAOImpl implements CsvImporterDAO {
 		return configuration;
 	}
 	
-	/**
+	/*
+	 * (non-Javadoc)
 	 * @see org.openmrs.module.csvimporter.model.CsvImporterDAO#updateConfiguration(org.openmrs.module.csvimporter.model.CsvImporterConfiguration)
 	 */
 	public CsvImporterConfiguration updateConfiguration(CsvImporterConfiguration configuration) throws DAOException {
@@ -49,7 +50,8 @@ public class CsvImporterDAOImpl implements CsvImporterDAO {
 		return configuration;
 	}
 	
-	/**
+	/*
+	 * (non-Javadoc)
 	 * @see org.openmrs.module.csvimporter.model.CsvImporterDAO#deleteConfiguration(org.openmrs.module.csvimporter.model.CsvImporterConfiguration)
 	 */
 	public void deleteConfiguration(CsvImporterConfiguration configuration) throws DAOException {
@@ -57,14 +59,16 @@ public class CsvImporterDAOImpl implements CsvImporterDAO {
 			sessionFactory.getCurrentSession().delete(configuration);
 	}
 	
-	/**
+	/*
+	 * (non-Javadoc)
 	 * @see org.openmrs.module.csvimporter.model.CsvImporterDAO#getConfigurationById(java.lang.Integer)
 	 */
 	public CsvImporterConfiguration getConfigurationById(Integer id) throws DAOException {
 		return (CsvImporterConfiguration) sessionFactory.getCurrentSession().get(CsvImporterConfiguration.class, id);
 	}
 	
-	/**
+	/*
+	 * (non-Javadoc)
 	 * @see org.openmrs.module.csvimporter.model.CsvImporterDAO#getConfigurationByName(java.lang.String)
 	 */
 	public CsvImporterConfiguration getConfigurationByName(String name) throws DAOException {
@@ -74,9 +78,8 @@ public class CsvImporterDAOImpl implements CsvImporterDAO {
 		return config;
 	}
 	
-	/**
-	 * Get all configuration objects in the database
-	 * 
+	/*
+	 * (non-Javadoc)
 	 * @see org.openmrs.module.csvimporter.model.CsvImporterDAO#getAllConfigurations()
 	 */
 	@SuppressWarnings("unchecked")
@@ -85,9 +88,8 @@ public class CsvImporterDAOImpl implements CsvImporterDAO {
 		return criteria.list();
 	}
 	
-	/**
-	 * Create a new mapping object for configuration
-	 * 
+	/*
+	 * (non-Javadoc)
 	 * @see org.openmrs.module.csvimporter.model.CsvImporterDAO#createMapping(org.openmrs.module.csvimporter.model.CsvImporterMapping)
 	 */
 	public CsvImporterMapping createMapping(CsvImporterMapping mapping) throws DAOException {
@@ -95,7 +97,8 @@ public class CsvImporterDAOImpl implements CsvImporterDAO {
 		return mapping;
 	}
 	
-	/**
+	/*
+	 * (non-Javadoc)
 	 * @see org.openmrs.module.csvimporter.model.CsvImporterDAO#updateMapping(org.openmrs.module.csvimporter.model.CsvImporterMapping)
 	 */
 	public CsvImporterMapping updateMapping(CsvImporterMapping mapping) throws DAOException {
@@ -103,11 +106,52 @@ public class CsvImporterDAOImpl implements CsvImporterDAO {
 		return mapping;
 	}
 	
-	/**
+	/*
+	 * 	(non-Javadoc)
 	 * @see org.openmrs.module.csvimporter.model.CsvImporterDAO#deleteMapping(org.openmrs.module.csvimporter.model.CsvImporterMapping)
 	 */
 	public void deleteMapping(CsvImporterMapping mapping) throws DAOException {
 		sessionFactory.getCurrentSession().delete(mapping);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see org.openmrs.module.csvimporter.model.CsvImporterDAO#getCsvImporterMappingById(java.lang.Integer)
+	 */
+	public CsvImporterMapping getCsvImporterMappingById(Integer id) throws DAOException {
+		return (CsvImporterMapping) sessionFactory.getCurrentSession().get(CsvImporterMapping.class, id);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see org.openmrs.module.csvimporter.model.CsvImporterDAO#getCsvImporterMappingByColumnName(java.lang.String)
+	 */
+	public CsvImporterMapping getCsvImporterMappingByColumnName(String name) throws DAOException {
+		CsvImporterMapping mapping = (CsvImporterMapping) sessionFactory.getCurrentSession()
+		        .createQuery("from CsvImporterMapping m where m.columnName = :columnName").setString("columnName", name)
+		        .uniqueResult();
+		return mapping;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see org.openmrs.module.csvimporter.model.CsvImporterDAO#getCsvImporterMappingByObjectCategory(java.lang.String)
+	 */
+	@SuppressWarnings("unchecked")
+	public List<CsvImporterMapping> getCsvImporterMappingByObjectCategory(String objectCategory) throws DAOException {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(CsvImporterConfiguration.class)
+		        .add(Restrictions.eq("objectCategory", objectCategory));
+		return criteria.list();
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see org.openmrs.module.csvimporter.model.CsvImporterDAO#getCsvImporterMappingByObjectName(java.lang.String)
+	 */
+	@SuppressWarnings("unchecked")
+	public List<CsvImporterMapping> getCsvImporterMappingByObjectName(String objectName) throws DAOException {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(CsvImporterConfiguration.class)
+		        .add(Restrictions.eq("objectName", objectName));
+		return criteria.list();
+	}
 }

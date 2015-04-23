@@ -35,14 +35,14 @@
 	<bean parent="serviceContext">
 		<property name="csvimporterService">
 			<list>
-				<value>org.openmrs.module.csvimporter.ICsvImporterService</value>
+				<value>org.openmrs.module.csvimporter.CsvImporterService</value>
 				<bean
 					class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 					<property name="transactionManager">
 						<ref bean="transactionManager" />
 					</property>
 					<property name="target">
-						<bean class="org.openmrs.module.csvimporter.ICsvImporterServiceImpl"> <!-- Your service's concrete class -->
+						<bean class="org.openmrs.module.csvimporter.CsvImporterServiceImpl"> <!-- Your service's concrete class -->
 							<property name="csvimporterDao"> <!-- Name of the DAO property on your ServiceImpl -->
 								<bean class="org.openmrs.module.csvimporter.model.CsvImporterDao"> <!-- Your DAO's concrete class -->
 									<property name="sessionFactory">

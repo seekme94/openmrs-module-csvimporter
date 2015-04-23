@@ -49,6 +49,10 @@ public class CsvImporterServiceImpl extends BaseOpenmrsService implements CsvImp
 		this.dao = dao;
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see org.openmrs.module.csvimporter.CsvImporterService#saveConfiguration(org.openmrs.module.csvimporter.model.CsvImporterConfiguration)
+	 */
 	public CsvImporterConfiguration saveConfiguration(CsvImporterConfiguration configuration) throws DAOException {
 		if (configuration.getId() == null) {
 			dao.createConfiguration(configuration);
@@ -58,10 +62,18 @@ public class CsvImporterServiceImpl extends BaseOpenmrsService implements CsvImp
 		return configuration;
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see org.openmrs.module.csvimporter.CsvImporterService#deleteConfiguration(org.openmrs.module.csvimporter.model.CsvImporterConfiguration)
+	 */
 	public void deleteConfiguration(CsvImporterConfiguration configuration) throws DAOException {
 		dao.deleteConfiguration(configuration);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see org.openmrs.module.csvimporter.CsvImporterService#getConfigurationById(java.lang.Integer)
+	 */
 	public CsvImporterConfiguration getConfigurationById(Integer id) throws DAOException {
 		if (id == null) {
 			return null;
@@ -69,6 +81,10 @@ public class CsvImporterServiceImpl extends BaseOpenmrsService implements CsvImp
 		return dao.getConfigurationById(id);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see org.openmrs.module.csvimporter.CsvImporterService#getConfigurationByName(java.lang.String)
+	 */
 	public CsvImporterConfiguration getConfigurationByName(String name) throws DAOException {
 		if ("".equals(name)) {
 			return null;
@@ -76,10 +92,18 @@ public class CsvImporterServiceImpl extends BaseOpenmrsService implements CsvImp
 		return dao.getConfigurationByName(name);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see org.openmrs.module.csvimporter.CsvImporterService#getAllConfigurations()
+	 */
 	public List<CsvImporterConfiguration> getAllConfigurations() throws DAOException {
 		return dao.getAllConfigurations();
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see org.openmrs.module.csvimporter.CsvImporterService#saveMapping(org.openmrs.module.csvimporter.model.CsvImporterMapping)
+	 */
 	public CsvImporterMapping saveMapping(CsvImporterMapping mapping) throws DAOException {
 		if (mapping.getId() == null) {
 			dao.createMapping(mapping);
@@ -89,6 +113,10 @@ public class CsvImporterServiceImpl extends BaseOpenmrsService implements CsvImp
 		return mapping;
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see org.openmrs.module.csvimporter.CsvImporterService#saveMappings(java.util.List)
+	 */
 	public List<CsvImporterMapping> saveMappings(List<CsvImporterMapping> mappings) throws DAOException {
 		for (CsvImporterMapping m : mappings) {
 			saveMapping(m);
@@ -96,8 +124,40 @@ public class CsvImporterServiceImpl extends BaseOpenmrsService implements CsvImp
 		return mappings;
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see org.openmrs.module.csvimporter.CsvImporterService#deleteMapping(org.openmrs.module.csvimporter.model.CsvImporterMapping)
+	 */
 	public void deleteMapping(CsvImporterMapping mapping) throws DAOException {
 		dao.deleteMapping(mapping);
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.openmrs.module.csvimporter.CsvImporterService#getCsvImporterMappingById(java.lang.Integer)
+	 */
+	public CsvImporterMapping getCsvImporterMappingById(Integer id) throws DAOException {
+		return dao.getCsvImporterMappingById(id);
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.openmrs.module.csvimporter.CsvImporterService#getCsvImporterMappingByColumnName(java.lang.String)
+	 */
+	public CsvImporterMapping getCsvImporterMappingByColumnName(String name) throws DAOException {
+		return dao.getCsvImporterMappingByColumnName(name);
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.openmrs.module.csvimporter.CsvImporterService#getCsvImporterMappingByObjectCategory(java.lang.String)
+	 */
+	public List<CsvImporterMapping> getCsvImporterMappingByObjectCategory(String objectCategory) throws DAOException {
+		return dao.getCsvImporterMappingByObjectCategory(objectCategory);
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.openmrs.module.csvimporter.CsvImporterService#getCsvImporterMappingByObjectName(java.lang.String)
+	 */
+	public List<CsvImporterMapping> getCsvImporterMappingByObjectName(String objectName) throws DAOException {
+		return dao.getCsvImporterMappingByObjectName(objectName);
 	}
 	
 }
