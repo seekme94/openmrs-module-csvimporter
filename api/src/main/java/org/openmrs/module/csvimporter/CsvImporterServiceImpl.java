@@ -19,6 +19,7 @@ import org.openmrs.api.db.DAOException;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.module.csvimporter.model.CsvImporterConfiguration;
 import org.openmrs.module.csvimporter.model.CsvImporterDAO;
+import org.openmrs.module.csvimporter.model.CsvImporterDAOImpl;
 import org.openmrs.module.csvimporter.model.CsvImporterMapping;
 
 /**
@@ -31,6 +32,14 @@ public class CsvImporterServiceImpl extends BaseOpenmrsService implements CsvImp
 	protected Log log = LogFactory.getLog(this.getClass());
 	
 	private CsvImporterDAO dao;
+	
+	
+    /**
+     * 
+     */
+    public CsvImporterServiceImpl() {
+    	dao = new CsvImporterDAOImpl();
+    }
 	
 	/**
 	 * Returns module by its qualified name

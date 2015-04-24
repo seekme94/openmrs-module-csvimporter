@@ -42,7 +42,7 @@ import org.springframework.web.context.request.WebRequest;
  * 'module/basicmodule/basicmoduleLink.form'.
  */
 @Controller
-@RequestMapping(value = "module/basicmodule/basicmoduleLink.form")
+@RequestMapping(value = "module/csvimporter/csvimporterLink.form")
 public class CsvImporterModuleFormController {
 	
 	/** Logger for this class and subclasses */

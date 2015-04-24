@@ -2,34 +2,37 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
                                    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="org.openmrs">
- <class
-  name="org.openmrs.module.csvimporter.model.CsvImporterConfiguration" table="csvimporter_configuration">
-  <id column="configuration_id" name="configId" type="int">
-   <generator class="native">
-    <param name="sequence">csvimporter_configuration_config_id_seq</param>
-   </generator>
-  </id>
-  <discriminator column="configuration_id" force="false" insert="false" not-null="true"/>
-  <property column="uuid" generated="never" lazy="false" name="uuid" type="java.lang.String"/>
-  <property column="configuration_name" generated="never" lazy="false"
-   name="configName" not-null="true" type="java.lang.String" unique="true"/>
-  <property column="date_created" generated="never" lazy="false"
-   name="dateCreated" not-null="true" type="java.util.Date"/>
-  <many-to-one class="org.openmrs.User" name="creator" not-null="true"/>
-  <property column="date_changed" generated="never" lazy="false"
-   name="dateChanged" type="java.util.Date"/>
-  <many-to-one class="org.openmrs.User" name="changedBy"/>
-  <property column="csv_header" generated="never" lazy="false"
-   name="csvHeader" type="java.lang.String"/>
-  <property column="field_separator" generated="never" lazy="false"
-   name="fieldSeparator" type="java.lang.Character"/>
-  <property column="line_separator" generated="never" lazy="false"
-   name="lineSeparator" type="java.lang.Character"/>
-  <property column="date_format" generated="never" lazy="false"
-   name="dateFormat" type="java.lang.String"/>
-  <property column="time_format" generated="never" lazy="false"
-   name="timeFormat" type="java.lang.String"/>
-  <property column="config_description" generated="never" lazy="false"
-   name="configDescription" type="java.lang.String"/>
- </class>
+	<class name="org.openmrs.module.csvimporter.model.CsvImporterConfiguration"
+		table="csvimporter_configuration">
+		<id column="configuration_id" name="configId" type="int">
+			<generator class="native">
+				<param name="sequence">csvimporter_configuration_config_id_seq</param>
+			</generator>
+		</id>
+		<discriminator column="configuration_id" force="false"
+			insert="false" not-null="true" />
+		<property column="uuid" generated="never" lazy="false" name="uuid"
+			type="java.lang.String" />
+		<property column="configuration_name" generated="never" lazy="false"
+			name="configName" not-null="true" type="java.lang.String" unique="true" />
+		<property column="date_created" generated="never" lazy="false"
+			name="dateCreated" not-null="true" type="java.util.Date" />
+		<many-to-one class="org.openmrs.User" name="creator"
+			not-null="true" />
+		<property column="date_changed" generated="never" lazy="false"
+			name="dateChanged" type="java.util.Date" />
+		<many-to-one class="org.openmrs.User" name="changedBy" />
+		<property column="csv_header" generated="never" lazy="false"
+			name="csvHeader" type="java.lang.String" />
+		<property column="field_separator" generated="never" lazy="false"
+			name="fieldSeparator" type="java.lang.Character" />
+		<property column="line_separator" generated="never" lazy="false"
+			name="lineSeparator" type="java.lang.Character" />
+		<property column="date_format" generated="never" lazy="false"
+			name="dateFormat" type="java.lang.String" />
+		<property column="time_format" generated="never" lazy="false"
+			name="timeFormat" type="java.lang.String" />
+		<property column="config_description" generated="never" lazy="false"
+			name="configDescription" type="java.lang.String" />
+	</class>
 </hibernate-mapping>
