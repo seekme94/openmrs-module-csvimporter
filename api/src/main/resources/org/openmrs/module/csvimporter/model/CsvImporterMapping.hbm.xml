@@ -3,7 +3,7 @@
                                    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="org.openmrs">
  <class batch-size="25"
-  name="org.openmrs.module.csvimporter.model.CsvImporterMapping" table="csvimporter_mapping">
+  name="org.openmrs.module.csvimporter.CsvImporterMapping" table="csvimporter_mapping">
   <id column="mapping_id" name="mappingId" type="int">
    <generator class="native">
     <param name="sequence">csvimporter_mapping_mapping_id_seq</param>
@@ -13,7 +13,7 @@
   <property column="uuid" generated="never" lazy="false" length="38"
    name="uuid" type="java.lang.String" unique="true"/>
   <many-to-one
-   class="org.openmrs.module.csvimporter.model.CsvImporterConfiguration" name="configuration"/>
+   class="org.openmrs.module.csvimporter.CsvImporterConfiguration" name="configuration"/>
   <property column="date_created" generated="never" lazy="false"
    length="19" name="dateCreated" not-null="true" type="java.util.Date"/>
   <many-to-one class="User" name="creator" not-null="true"/>

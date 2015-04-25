@@ -15,8 +15,6 @@ import java.util.List;
 
 import org.openmrs.api.OpenmrsService;
 import org.openmrs.api.db.DAOException;
-import org.openmrs.module.csvimporter.model.CsvImporterConfiguration;
-import org.openmrs.module.csvimporter.model.CsvImporterMapping;
 
 /**
  * @author owais.hussain@irdresearch.org

@@ -9,7 +9,7 @@
  * Interactive Health Solutions, hereby disclaims all copyright interest in this program written by the contributors.
  * Contributors: Owais
  */
-package org.openmrs.module.csvimporter.model;
+package org.openmrs.module.csvimporter.db.hibernate;
 
 import java.util.List;
 
@@ -19,6 +19,9 @@ import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.openmrs.api.db.DAOException;
+import org.openmrs.module.csvimporter.CsvImporterConfiguration;
+import org.openmrs.module.csvimporter.CsvImporterMapping;
+import org.openmrs.module.csvimporter.db.CsvImporterDAO;
 
 /**
  * @author owais.hussain@irdresearch.org

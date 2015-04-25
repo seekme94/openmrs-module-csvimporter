@@ -9,11 +9,13 @@
  * Interactive Health Solutions, hereby disclaims all copyright interest in this program written by the contributors.
  * Contributors: Owais
  */
-package org.openmrs.module.csvimporter.model;
+package org.openmrs.module.csvimporter.db;
 
 import java.util.List;
 
 import org.openmrs.api.db.DAOException;
+import org.openmrs.module.csvimporter.CsvImporterConfiguration;
+import org.openmrs.module.csvimporter.CsvImporterMapping;
 
 /**
  * @author owais.hussain@irdresearch.org

@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
                                    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="org.openmrs">
-	<class name="org.openmrs.module.csvimporter.model.CsvImporterConfiguration"
+	<class name="org.openmrs.module.csvimporter.CsvImporterConfiguration"
 		table="csvimporter_configuration">
 		<id column="configuration_id" name="configId" type="int">
 			<generator class="native">

@@ -9,7 +9,7 @@
  * Interactive Health Solutions, hereby disclaims all copyright interest in this program written by the contributors.
  * Contributors: Owais
  */
-package org.openmrs.module.csvimporter.model;
+package org.openmrs.module.csvimporter;
 
 import java.io.Serializable;
 import java.util.Collection;

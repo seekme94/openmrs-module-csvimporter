@@ -14,7 +14,6 @@ package org.openmrs.module.csvimporter;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -32,10 +31,8 @@ import org.openmrs.PersonAttributeType;
 import org.openmrs.PersonName;
 import org.openmrs.User;
 import org.openmrs.api.context.Context;
+import org.openmrs.api.context.ServiceContext;
 import org.openmrs.module.ModuleMustStartException;
-import org.openmrs.module.csvimporter.model.CsvImporterConfiguration;
-import org.openmrs.module.csvimporter.model.CsvImporterMapping;
-import org.openmrs.module.csvimporter.model.OpenMrsObjectCategory;
 import org.openmrs.module.csvimporter.util.CsvUtil;
 import org.openmrs.module.csvimporter.util.DateTimeUtil;
 import org.openmrs.util.DatabaseUpdateException;
@@ -49,9 +46,7 @@ public class CsvImporterMain {
 	
 	private Log log = LogFactory.getLog(this.getClass());
 	
-	static String filePath = "C:\\Users\\Owais\\Documents\\dumps\\MINE-TB Clean data.csv";
-	
-	static String propFilePath = "C:\\Application Data\\OpenMRS\\openmrs-runtime.properties";
+	static String filePath = "D:\\MINE-TB Clean data.csv";
 	
 	static char separator = ',';
 	
@@ -71,6 +66,7 @@ public class CsvImporterMain {
 			Context.startup(url, username, password, props);
 			Context.openSession();
 			Context.authenticate("owais", "Jingle94$");
+			//importerService = new CsvImporterServiceImpl();
 			importerService = Context.getService(CsvImporterService.class);
 		}
 		catch (ModuleMustStartException e) {
@@ -134,6 +130,7 @@ public class CsvImporterMain {
 		        OpenMrsObjectCategory.PERSON_ATTRIBUTE, "Suspect/Non-Suspect", null));
 		configuration.setMappings(map);
 		
+		// Save the configuration object in the database
 		importerService.saveConfiguration(configuration);
 		
 		// district_name,screener_id,user_id,nhls_id,tb_contact,hiv_positive,diabetes,sputum_collection_date,sputum_result_date,sputum_result,mdr,treatment_start_date,died,lost_followup,transferred,transfer_to,comments
@@ -151,7 +148,8 @@ public class CsvImporterMain {
 		Person[] people = new Person[data.length];
 		PersonName[] names = new PersonName[data.length];
 		PersonAddress[] addresses = new PersonAddress[data.length];
-		List<CsvImporterMapping> definedAttributes = importerService.getCsvImporterMappingByObjectCategory(OpenMrsObjectCategory.PERSON_ATTRIBUTE);
+		List<CsvImporterMapping> definedAttributes = importerService
+		        .getCsvImporterMappingByObjectCategory(OpenMrsObjectCategory.PERSON_ATTRIBUTE);
 		PersonAttributeType[] personAttributeTypes = new PersonAttributeType[definedAttributes.size()];
 		for (int i = 0; i < definedAttributes.size(); i++) {
 			personAttributeTypes[i] = Context.getPersonService().getPersonAttributeTypeByName(
@@ -162,17 +160,25 @@ public class CsvImporterMain {
 		// For each record, fill respective properties
 		for (int i = 0; i < data.length; i++) {
 			try {
-				people[i].setGender(data[i][indices.get("gender")]);
-				people[i].setDateCreated(DateTimeUtil.getDateFromString(data[i][indices.get("date_created")], dateFormat));
-				people[i].setBirthdate(DateTimeUtil.getDateFromString(data[i][indices.get("date_of_birth")], dateFormat));
+				if (indices.containsKey("gender"))
+					people[i].setGender(data[i][indices.get("gender")]);
+				if (indices.containsKey("date_created"))
+					people[i]
+					        .setDateCreated(DateTimeUtil.getDateFromString(data[i][indices.get("date_created")], dateFormat));
+				if (indices.containsKey("date_of_birth"))
+					people[i]
+					        .setBirthdate(DateTimeUtil.getDateFromString(data[i][indices.get("date_of_birth")], dateFormat));
 				people[i].setCreator(user);
-				
-				names[i].setGivenName(data[i][indices.get("given_name")]);
-				names[i].setFamilyName(data[i][indices.get("family_name")]);
-				
-				addresses[i].setAddress1(data[i][indices.get("address1")]);
-				addresses[i].setCityVillage(data[i][indices.get("city_villate")]);
-				addresses[i].setCountry(data[i][indices.get("country")]);
+				if (indices.containsKey("given_name"))
+					names[i].setGivenName(data[i][indices.get("given_name")]);
+				if (indices.containsKey("family_name"))
+					names[i].setFamilyName(data[i][indices.get("family_name")]);
+				if (indices.containsKey("address1"))
+					addresses[i].setAddress1(data[i][indices.get("address1")]);
+				if (indices.containsKey("city_village"))
+					addresses[i].setCityVillage(data[i][indices.get("city_villate")]);
+				if (indices.containsKey("country"))
+					addresses[i].setCountry(data[i][indices.get("country")]);
 				
 				for (int j = 0; j < definedAttributes.size(); j++) {
 					attributes[i][j].setAttributeType(null);
